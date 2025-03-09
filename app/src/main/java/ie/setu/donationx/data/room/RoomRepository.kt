@@ -1,22 +1,23 @@
 package ie.setu.donationx.data.room
 
 import ie.setu.donationx.data.DonationModel
+import ie.setu.donationx.data.TravelModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class RoomRepository @Inject
-constructor(private val donationDAO: DonationDAO) {
-    fun getAll(): Flow<List<DonationModel>>
-            = donationDAO.getAll()
+constructor(private val travelDAO: TravelDAO) {
+    fun getAll(): Flow<List<TravelModel>>
+            = travelDAO.getAll()
 
-    fun get(id: Int) = donationDAO.get(id)
+    fun get(id: Int) = travelDAO.get(id)
 
-    suspend fun insert(donation: DonationModel)
-            { donationDAO.insert(donation) }
+    suspend fun insert(review: TravelModel)
+            { travelDAO.insert(review) }
 
-    suspend fun update(donation: DonationModel)
-            { donationDAO.update(donation.id,donation.message) }
+    suspend fun update(review: TravelModel)
+            { travelDAO.update(review.id,review.review) }
 
-    suspend fun delete(donation: DonationModel)
-            { donationDAO.delete(donation) }
+    suspend fun delete(review: TravelModel)
+            { travelDAO.delete(review) }
 }

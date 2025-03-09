@@ -23,13 +23,13 @@ fun DetailsScreenText(modifier: Modifier = Modifier) {
         ),
         verticalArrangement = Arrangement.spacedBy(24.dp)) {
         Text(
-            text = "Donation Details",
+            text = "Travel Details",
             fontWeight = FontWeight.Bold,
             fontSize = 28.sp,
             color = Color.Black
         )
         Text(
-            text = "Please Update your Message Below",
+            text = "Please Update your Review",
             fontWeight = FontWeight.Bold,
             fontSize = 20.sp,
             color = MaterialTheme.colorScheme.tertiary

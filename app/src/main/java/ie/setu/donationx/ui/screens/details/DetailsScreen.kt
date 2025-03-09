@@ -34,7 +34,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import ie.setu.donationx.data.DonationModel
+import ie.setu.donationx.data.TravelModel
 import ie.setu.donationx.ui.components.details.DetailsScreenText
 import ie.setu.donationx.ui.components.details.ReadOnlyTextField
 import ie.setu.donationx.ui.theme.DonationXTheme
@@ -45,7 +45,7 @@ fun DetailsScreen(
     modifier: Modifier = Modifier,
     detailViewModel: DetailsViewModel = hiltViewModel()
 ) {
-    var donation = detailViewModel.donation.value
+    var review = detailViewModel.review.value
     val errorEmptyMessage = "Message Cannot be Empty..."
     val errorShortMessage = "Message must be at least 2 characters"
     var text by rememberSaveable { mutableStateOf("") }
@@ -74,23 +74,22 @@ fun DetailsScreen(
             ),
         )
         {
-            //Payment Type Field
-            ReadOnlyTextField(value = donation.paymentType,
-                label = "Payment Type")
-            //Payment Amount Field
-            ReadOnlyTextField(value = "€" + donation.paymentAmount.toString(),
-                label = "Payment Amount")
-            //Date Donated Field
-            ReadOnlyTextField(value = donation.dateDonated.toString(),
-                label = "Date Donated")
+            ReadOnlyTextField(value = review.location,
+                label = "location")
+
+            ReadOnlyTextField(value = review.rating.toString(),
+                label = "rating")
+
+            ReadOnlyTextField(value = review.review,
+                label = "review")
             //Message Field
-            text = donation.message
+            text = review.review
             OutlinedTextField(modifier = Modifier.fillMaxWidth(),
                 value = text,
                 onValueChange = {
                     text = it
                     validate(text)
-                    donation.message = text
+                    review.review = text
                 },
                 maxLines = 2,
                 label = { Text(text = "Message") },
@@ -130,7 +129,7 @@ fun DetailsScreen(
             Spacer(modifier.height(height = 48.dp))
             Button(
                 onClick = {
-                    detailViewModel.updateDonation(donation)
+                    detailViewModel.updateReview(review)
                     onMessageChanged = false
                 },
                 elevation = ButtonDefaults.buttonElevation(20.dp),
@@ -160,9 +159,8 @@ fun DetailScreenPreview() {
 @Composable
 fun PreviewDetailScreen(modifier: Modifier) {
 
-    val donation = DonationModel()
-    val errorEmptyMessage = "Message Cannot be Empty..."
-    val errorShortMessage = "Message must be at least 2 characters"
+    val review = TravelModel()
+
     var text by rememberSaveable { mutableStateOf("") }
     var onMessageChanged by rememberSaveable { mutableStateOf(false) }
     var isEmptyError by rememberSaveable { mutableStateOf(false) }
@@ -193,45 +191,24 @@ fun PreviewDetailScreen(modifier: Modifier) {
                 ),
         )
         {
-            //Payment Type Field
-            OutlinedTextField(modifier = modifier.fillMaxWidth(),
-                value = donation.paymentType,
-                onValueChange = { },
-                label = { Text(text = "Payment Type") },
-                readOnly = true,
-                colors = OutlinedTextFieldDefaults.colors(
-                    unfocusedBorderColor = MaterialTheme.colorScheme.secondary,
-                )
-            )
-            //Payment Amount Field
-            OutlinedTextField(modifier = modifier.fillMaxWidth(),
-                value = "€" + donation.paymentAmount.toString(),
-                onValueChange = { },
-                label = { Text(text = "Payment Amount") },
-                readOnly = true,
-                colors = OutlinedTextFieldDefaults.colors(
-                    unfocusedBorderColor = MaterialTheme.colorScheme.secondary,
-                )
-            )
-            //Date Donated Field
-            OutlinedTextField(modifier = modifier.fillMaxWidth(),
-                value = donation.dateDonated.toString(),
-                onValueChange = { },
-                label = { Text(text = "Date Donated") },
-                readOnly = true,
-                colors = OutlinedTextFieldDefaults.colors(
-                    unfocusedBorderColor = MaterialTheme.colorScheme.secondary,
-                )
-            )
-            //  Log.i("VM Call","Message is : ${donation.message}")
-            //Message Field
-            text = donation.message
-            OutlinedTextField(modifier = Modifier.fillMaxWidth(),
+            // Location Field
+            ReadOnlyTextField(value = review.location, label = "Location")
+
+            // Rating Field
+            ReadOnlyTextField(value = review.rating.toString(), label = "Rating")
+
+            // Date Visited Field
+            ReadOnlyTextField(value = review.dateReviewed.toString(), label = "Date Visited")
+
+            // Review Field
+            text = review.review
+            OutlinedTextField(
+                modifier = Modifier.fillMaxWidth(),
                 value = text,
                 onValueChange = {
                     text = it
                     validate(text)
-                    donation.message = text
+                    review.review = text
                 },
                 maxLines = 2,
                 label = { Text(text = "Message") },
@@ -240,7 +217,7 @@ fun PreviewDetailScreen(modifier: Modifier) {
                     if (isEmptyError) {
                         Text(
                             modifier = Modifier.fillMaxWidth(),
-                            text = errorEmptyMessage,
+                            text = "Review cannot be empty...",
                             color = MaterialTheme.colorScheme.error
                         )
                     }
@@ -248,7 +225,7 @@ fun PreviewDetailScreen(modifier: Modifier) {
                         if (isShortError) {
                             Text(
                                 modifier = Modifier.fillMaxWidth(),
-                                text = errorShortMessage,
+                                text = "Review cannot be short...",
                                 color = MaterialTheme.colorScheme.error
                             )
                         }

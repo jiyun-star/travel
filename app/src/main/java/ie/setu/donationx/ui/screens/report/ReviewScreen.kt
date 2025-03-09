@@ -18,20 +18,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import ie.setu.donationx.R
-import ie.setu.donationx.data.DonationModel
+import ie.setu.donationx.data.TravelModel
 import ie.setu.donationx.data.fakeDonations
 import ie.setu.donationx.ui.components.general.Centre
-import ie.setu.donationx.ui.components.report.DonationCardList
 import ie.setu.donationx.ui.components.report.ReportText
 import ie.setu.donationx.ui.theme.DonationXTheme
 
 
 @Composable
-fun ReportScreen(modifier: Modifier = Modifier,
-                 onClickDonationDetails: (Int) -> Unit,
+fun ReviewScreen(modifier: Modifier = Modifier,
+                 onClickReviewDetails: (Int) -> Unit,
                  reportViewModel: ReportViewModel = hiltViewModel()) {
 
-    val donations = reportViewModel.uiDonations.collectAsState().value
+    val reviews = reportViewModel.uiReviews.collectAsState().value
 
     Column {
         Column(
@@ -41,7 +40,7 @@ fun ReportScreen(modifier: Modifier = Modifier,
             ),
         ) {
             ReportText()
-            if(donations.isEmpty())
+            if(reviews.isEmpty())
                 Centre(Modifier.fillMaxSize()) {
                     Text(color = MaterialTheme.colorScheme.secondary,
                         fontWeight = FontWeight.Bold,
@@ -52,12 +51,12 @@ fun ReportScreen(modifier: Modifier = Modifier,
                     )
                 }
             else
-                DonationCardList(
-                    donations = donations,
-                    onClickDonationDetails = onClickDonationDetails,
-                    onDeleteDonation = {
-                            donation: DonationModel ->
-                                reportViewModel.deleteDonation(donation)
+                ReviewCardList(
+                    reviews = reviews,
+                    onClickReviewDetails = onClickReviewDetails,
+                    onDeleteReview = {
+                            reviews: TravelModel ->
+                                reportViewModel.deleteReview(review)
                     }
                 )
         }
@@ -76,7 +75,7 @@ fun ReportScreenPreview() {
 
 @Composable
 fun PreviewReportScreen(modifier: Modifier = Modifier,
-                        donations: SnapshotStateList<DonationModel>
+                        donations: SnapshotStateList<TravelModel>
 ) {
 
     Column {
@@ -87,7 +86,7 @@ fun PreviewReportScreen(modifier: Modifier = Modifier,
             ),
         ) {
             ReportText()
-            if(donations.isEmpty())
+            if(reviews.isEmpty())
                 Centre(Modifier.fillMaxSize()) {
                     Text(color = MaterialTheme.colorScheme.secondary,
                         fontWeight = FontWeight.Bold,
@@ -98,10 +97,10 @@ fun PreviewReportScreen(modifier: Modifier = Modifier,
                     )
                 }
             else
-                DonationCardList(
-                    donations = donations,
-                    onDeleteDonation = {},
-                    onClickDonationDetails = { }
+                ReviewCardList(
+                    reviews = reviews,
+                    onDeleteReview = {},
+                    onClickReviewnDetails = { }
                 )
         }
     }
