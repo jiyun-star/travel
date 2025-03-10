@@ -1,4 +1,4 @@
-package ie.setu.donationx.ui.components.donate
+package ie.setu.donationx.ui.components.travel
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

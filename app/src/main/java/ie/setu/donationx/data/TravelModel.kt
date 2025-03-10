@@ -15,7 +15,7 @@ data class TravelModel(
     val dateReviewed: Date = Date()
 )
 
-val fakeDonations = List(30) { i ->
+val fakeReviews = List(30) { i ->
     TravelModel(
         id = 12345 + i,
         location = "spot $i",

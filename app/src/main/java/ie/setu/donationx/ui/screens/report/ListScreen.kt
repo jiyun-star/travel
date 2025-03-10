@@ -19,18 +19,20 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import ie.setu.donationx.R
 import ie.setu.donationx.data.TravelModel
-import ie.setu.donationx.data.fakeDonations
+import ie.setu.donationx.data.fakeReviews
 import ie.setu.donationx.ui.components.general.Centre
 import ie.setu.donationx.ui.components.report.ReportText
+import ie.setu.donationx.ui.components.review.ReviewCardList
+import ie.setu.donationx.ui.screens.review.ListViewModel
 import ie.setu.donationx.ui.theme.DonationXTheme
 
 
 @Composable
-fun ReviewScreen(modifier: Modifier = Modifier,
+fun ListScreen(modifier: Modifier = Modifier,
                  onClickReviewDetails: (Int) -> Unit,
-                 reportViewModel: ReportViewModel = hiltViewModel()) {
+                 listViewModel: ListViewModel = hiltViewModel()) {
 
-    val reviews = reportViewModel.uiReviews.collectAsState().value
+    val reviews = listViewModel.uiReviews.collectAsState().value
 
     Column {
         Column(
@@ -55,8 +57,8 @@ fun ReviewScreen(modifier: Modifier = Modifier,
                     reviews = reviews,
                     onClickReviewDetails = onClickReviewDetails,
                     onDeleteReview = {
-                            reviews: TravelModel ->
-                                reportViewModel.deleteReview(review)
+                            review: TravelModel ->
+                        listViewModel.deleteReview(review)
                     }
                 )
         }
@@ -68,14 +70,14 @@ fun ReviewScreen(modifier: Modifier = Modifier,
 fun ReportScreenPreview() {
     DonationXTheme {
         PreviewReportScreen( modifier = Modifier,
-            donations = fakeDonations.toMutableStateList()
+            reviews = fakeReviews.toMutableStateList()
         )
     }
 }
 
 @Composable
 fun PreviewReportScreen(modifier: Modifier = Modifier,
-                        donations: SnapshotStateList<TravelModel>
+                        reviews: SnapshotStateList<TravelModel>
 ) {
 
     Column {
@@ -100,7 +102,7 @@ fun PreviewReportScreen(modifier: Modifier = Modifier,
                 ReviewCardList(
                     reviews = reviews,
                     onDeleteReview = {},
-                    onClickReviewnDetails = { }
+                    onClickReviewDetails = { }
                 )
         }
     }

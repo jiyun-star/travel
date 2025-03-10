@@ -8,11 +8,10 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import ie.setu.donationx.data.DonationModel
 import ie.setu.donationx.ui.screens.about.AboutScreen
 import ie.setu.donationx.ui.screens.details.DetailsScreen
-import ie.setu.donationx.ui.screens.donate.DonateScreen
-import ie.setu.donationx.ui.screens.report.ReportScreen
+import ie.setu.donationx.ui.screens.donate.ReviewScreen
+import ie.setu.donationx.ui.screens.report.ListScreen
 
 @Composable
 fun NavHostProvider(
@@ -27,12 +26,12 @@ fun NavHostProvider(
 
         composable(route = Donate.route) {
             //call our 'Donate' Screen Here
-            DonateScreen(modifier = modifier)
+            ReviewScreen(modifier = modifier)
         }
         composable(route = Report.route) {
             //call our 'Report' Screen Here
-            ReportScreen(modifier = modifier,
-                onClickDonationDetails = {
+            ListScreen(modifier = modifier,
+                onClickReviewDetails = {
                     donationId : Int ->
                     navController.navigateToDonationDetails(donationId)
                 },

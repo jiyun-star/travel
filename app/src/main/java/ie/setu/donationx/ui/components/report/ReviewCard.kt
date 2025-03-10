@@ -5,32 +5,13 @@ import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Business
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.FilledTonalButton
-import androidx.compose.material3.FilledTonalIconButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -47,13 +28,13 @@ import java.text.DateFormat
 import java.util.Date
 
 @Composable
-fun DonationCard(
-    paymentType: String,
-    paymentAmount: Int,
-    message: String,
-    dateCreated: String,
+fun ReviewCard(
+    location: String,
+    rating: Int,
+    review: String,
+    dateReviewed: String,
     onClickDelete: () -> Unit,
-    onClickDonationDetails: () -> Unit,
+    onClickReviewDetails: () -> Unit
 ) {
     Card(
         border = BorderStroke(1.dp, Color.Black),
@@ -62,23 +43,25 @@ fun DonationCard(
         ),
         modifier = Modifier.padding(vertical = 2.dp, horizontal = 2.dp)
     ) {
-        DonationCardContent(paymentType,
-            paymentAmount,
-            message,
-            dateCreated,
+        TravelCardContent(
+            location,
+            rating,
+            review,
+            dateReviewed,
             onClickDelete,
-            onClickDonationDetails)
+            onClickReviewDetails
+        )
     }
 }
 
 @Composable
-private fun DonationCardContent(
-    paymentType: String,
-    paymentAmount: Int,
-    message: String,
-    dateCreated: String,
+private fun TravelCardContent(
+    location: String,
+    rating: Int,
+    review: String,
+    dateReviewed: String,
     onClickDelete: () -> Unit,
-    onClickDonationDetails: () -> Unit
+    onClickReviewDetails: () -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
     var showDeleteConfirmDialog by remember { mutableStateOf(false) }
@@ -92,12 +75,14 @@ private fun DonationCardContent(
                     stiffness = Spring.StiffnessLow
                 )
             )
-            .background(brush = Brush.horizontalGradient(
-                colors = listOf(
-                    startGradientColor,
-                    endGradientColor,
+            .background(
+                brush = Brush.horizontalGradient(
+                    colors = listOf(
+                        startGradientColor,
+                        endGradientColor,
+                    )
                 )
-            ))
+            )
     ) {
         Column(
             modifier = Modifier
@@ -105,42 +90,37 @@ private fun DonationCardContent(
                 .padding(14.dp)
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(
-                    imageVector = Icons.Filled.Business,
-                    "Donation Status",
-                    Modifier.padding(end = 8.dp)
-                )
                 Text(
-                    text = paymentType,
+                    text = location,
                     style = MaterialTheme.typography.headlineMedium.copy(
                         fontWeight = FontWeight.ExtraBold
                     )
                 )
                 Spacer(Modifier.weight(1f))
                 Text(
-                    text = "€$paymentAmount",
+                    text = "⭐ $rating",
                     style = MaterialTheme.typography.headlineMedium.copy(
                         fontWeight = FontWeight.ExtraBold
                     )
                 )
             }
             Text(
-                text = "Donated $dateCreated", style = MaterialTheme.typography.labelSmall
+                text = "Reviewed on $dateReviewed", style = MaterialTheme.typography.labelSmall
             )
             if (expanded) {
-                Text(modifier = Modifier.padding(vertical = 16.dp), text = message)
-                Row(modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween) {
-                    FilledTonalButton(onClick = onClickDonationDetails) {
+                Text(modifier = Modifier.padding(vertical = 16.dp), text = review)
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    FilledTonalButton(onClick = onClickReviewDetails) {
                         Text(text = "Show More")
                     }
-
                     FilledTonalIconButton(onClick = {
                         showDeleteConfirmDialog = true
                     }) {
-                        Icon(Icons.Filled.Delete, "Delete Donation")
+                        Icon(Icons.Filled.Delete, "Delete Review")
                     }
-
                     if (showDeleteConfirmDialog) {
                         showDeleteAlert(
                             onDismiss = { showDeleteConfirmDialog = false },
@@ -152,8 +132,7 @@ private fun DonationCardContent(
         }
         IconButton(onClick = { expanded = !expanded }) {
             Icon(
-                imageVector = if (expanded) Icons.Filled.ExpandLess
-                                    else Icons.Filled.ExpandMore,
+                imageVector = if (expanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
                 contentDescription = if (expanded) {
                     stringResource(R.string.show_less)
                 } else {
@@ -167,9 +146,10 @@ private fun DonationCardContent(
 @Composable
 fun showDeleteAlert(
     onDismiss: () -> Unit,
-    onDelete: () -> Unit) {
+    onDelete: () -> Unit
+) {
     AlertDialog(
-        onDismissRequest = onDismiss ,
+        onDismissRequest = onDismiss,
         title = { Text(stringResource(id = R.string.confirm_delete)) },
         text = { Text(stringResource(id = R.string.confirm_delete_message)) },
         confirmButton = {
@@ -183,21 +163,17 @@ fun showDeleteAlert(
     )
 }
 
-
 @Preview
 @Composable
-fun DonationCardPreview() {
+fun TravelReviewCardPreview() {
     DonationXTheme {
-        DonationCard(
-            paymentType = "Direct",
-            paymentAmount = 100,
-            message = """
-                A message entered 
-                by the user..."
-            """.trimIndent(),
-            dateCreated = DateFormat.getDateTimeInstance().format(Date()),
+        ReviewCard (
+            location = "seoul, korea",
+            rating = 4,
+            review = "ok",
+            dateReviewed = DateFormat.getDateTimeInstance().format(Date()),
             onClickDelete = { },
-            onClickDonationDetails = {}
+            onClickReviewDetails = {}
         )
     }
 }

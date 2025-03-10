@@ -1,6 +1,5 @@
 package ie.setu.donationx.data.room
 
-import ie.setu.donationx.data.DonationModel
 import ie.setu.donationx.data.TravelModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

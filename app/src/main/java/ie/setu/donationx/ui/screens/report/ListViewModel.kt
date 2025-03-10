@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ReviewViewModel @Inject
+class ListViewModel @Inject
 constructor(private val repository: RoomRepository) : ViewModel() {
 
     private val _reviews = MutableStateFlow<List<TravelModel>>(emptyList())
@@ -20,7 +20,7 @@ constructor(private val repository: RoomRepository) : ViewModel() {
 
     init {
         viewModelScope.launch {
-            repository.getAllReviews().collect { listOfReviews ->
+            repository.getAll().collect { listOfReviews ->
                 _reviews.value = listOfReviews
             }
         }
@@ -28,7 +28,11 @@ constructor(private val repository: RoomRepository) : ViewModel() {
 
     fun deleteReview(review: TravelModel) {
         viewModelScope.launch {
-            repository.deleteReview(review)
+            repository.delete(review)
         }
+    }
+
+    fun addReview(newReview: TravelModel) {
+
     }
 }
