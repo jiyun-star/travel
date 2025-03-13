@@ -80,9 +80,6 @@ fun DetailsScreen(
             ReadOnlyTextField(value = review.rating.toString(),
                 label = "rating")
 
-            ReadOnlyTextField(value = review.review,
-                label = "review")
-            //Message Field
             text = review.review
             OutlinedTextField(modifier = Modifier.fillMaxWidth(),
                 value = text,
@@ -92,7 +89,7 @@ fun DetailsScreen(
                     review.review = text
                 },
                 maxLines = 2,
-                label = { Text(text = "Message") },
+                label = { Text(text = "review") },
                 isError = isEmptyError || isShortError,
                 supportingText = {
                     if (isEmptyError) {

@@ -38,8 +38,8 @@ private val LightColorScheme = lightColorScheme(
     */
 )
 
-val startGradientColor = Color(0xFF1e88e5)
-val endGradientColor = Color(0xFF005cb2)
+val startGradientColor = Color(0xFF2E7D32)
+val endGradientColor = Color(0xFF9CBB91)
 
 @Composable
 fun DonationXTheme(

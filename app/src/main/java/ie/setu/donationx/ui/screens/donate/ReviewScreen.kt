@@ -3,6 +3,7 @@ package ie.setu.donationx.ui.screens.donate
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.Button
@@ -22,6 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import ie.setu.donationx.data.TravelModel
 import ie.setu.donationx.ui.screens.review.ListViewModel
 import ie.setu.donationx.ui.theme.DonationXTheme
@@ -31,7 +33,7 @@ fun ReviewScreen(modifier: Modifier = Modifier,
                  reviewViewModel: ReviewViewModel = hiltViewModel()
 ) {
     var location by remember { mutableStateOf("") }
-    var rating by remember { mutableStateOf("5") }
+    var rating by remember { mutableStateOf("") }
     var review by remember { mutableStateOf("") }
 
     var isLocationError by remember { mutableStateOf(false) }
@@ -40,7 +42,7 @@ fun ReviewScreen(modifier: Modifier = Modifier,
 
     fun validate(): Boolean {
         isLocationError = location.isBlank()
-        isRatingError = rating.toIntOrNull() == null || rating.toInt() !in 1..10
+        isRatingError = rating.toIntOrNull() == null || rating.toInt() !in 1..5
         isReviewError = review.length < 2
 
         return !isLocationError && !isRatingError && !isReviewError
@@ -64,14 +66,19 @@ fun ReviewScreen(modifier: Modifier = Modifier,
 
         OutlinedTextField(
             value = rating,
-            onValueChange = { rating = it },
-            label = { Text("Rating (1-10)") },
+            onValueChange = {
+                val newRating = it.toIntOrNull()
+                if (newRating != null && newRating in 1..5) {
+                    rating = it //
+                }
+            },
+            label = { Text("Rating (1-5)") },
             isError = isRatingError,
             trailingIcon = {
                 if (isRatingError) Icon(Icons.Filled.Warning, contentDescription = "Error", tint = Color.Red)
-            }
+            },
+            modifier = Modifier.fillMaxWidth()
         )
-
         OutlinedTextField(
             value = review,
             onValueChange = { review = it },
@@ -93,8 +100,9 @@ fun ReviewScreen(modifier: Modifier = Modifier,
                     )
                     reviewViewModel.insert(newReview)
                 }
+
             },
-            enabled = !isLocationError && !isRatingError && !isReviewError
+            enabled = validate(),
         ) {
             Text("Save")
         }

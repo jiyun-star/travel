@@ -17,14 +17,14 @@ interface AppDestination {
 
 object Report : AppDestination {
     override val icon = Icons.AutoMirrored.Filled.List
-    override val label = "Report"
-    override val route = "report"
+    override val label = "list"
+    override val route = "list"
 }
 
 object Donate : AppDestination {
     override val icon = Icons.Filled.AddCircle
-    override val label = "Donate"
-    override val route = "donate"
+    override val label = "review"
+    override val route = "review"
 }
 
 object About : AppDestination {

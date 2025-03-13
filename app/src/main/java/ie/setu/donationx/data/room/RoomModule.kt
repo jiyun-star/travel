@@ -22,7 +22,7 @@ object RoomModule {
 
     @Provides
     fun provideDonationDAO(appDatabase: AppDatabase):
-            TravelDAO = appDatabase.getDonationDAO()
+            TravelDAO = appDatabase.getTravelDAO()
 
     @Provides
     fun provideRoomRepository(travelDAO: TravelDAO):
