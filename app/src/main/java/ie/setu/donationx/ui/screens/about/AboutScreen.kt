@@ -35,7 +35,7 @@ fun AboutScreen(modifier: Modifier = Modifier) {
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.download),
-                    contentDescription = "travel image",
+                    contentDescription = "travel",
                     modifier = Modifier.size(350.dp)
                 )
             }
