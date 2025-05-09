@@ -19,11 +19,12 @@ internal fun ReviewCardList(
     modifier: Modifier = Modifier,
     onDeleteReview: (TravelModel) -> Unit,
     onClickReviewDetails: (Int) -> Unit,
+    onRefreshList: () -> Unit,
 ) {
     LazyColumn {
         items(
             items = reviews,
-            key = { review -> review.id }
+            key = { review -> review._id }
         ) { review ->
             ReviewCard(
                 location = review.location,  // 위치 정보 추가
@@ -31,7 +32,9 @@ internal fun ReviewCardList(
                 review = review.review,  // 리뷰 내용
                 dateReviewed = DateFormat.getDateTimeInstance().format(review.dateReviewed),
                 onClickDelete = { onDeleteReview(review) },
-                onClickReviewDetails = { onClickReviewDetails(review.id) }
+                onClickReviewDetails = { onClickReviewDetails(review.id) },
+                onRefreshList = onRefreshList
+
             )
         }
     }

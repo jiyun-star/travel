@@ -34,8 +34,10 @@ fun ReviewCard(
     review: String,
     dateReviewed: String,
     onClickDelete: () -> Unit,
-    onClickReviewDetails: () -> Unit
-) {
+    onClickReviewDetails: () -> Unit,
+    onRefreshList: () -> Unit,
+
+    ) {
     Card(
         border = BorderStroke(1.dp, Color.Black),
         colors = CardDefaults.cardColors(
@@ -49,7 +51,8 @@ fun ReviewCard(
             review,
             dateReviewed,
             onClickDelete,
-            onClickReviewDetails
+            onClickReviewDetails,
+            onRefreshList
         )
     }
 }
@@ -61,8 +64,10 @@ private fun TravelCardContent(
     review: String,
     dateReviewed: String,
     onClickDelete: () -> Unit,
-    onClickReviewDetails: () -> Unit
-) {
+    onClickReviewDetails: () -> Unit,
+    onRefreshList: () -> Unit,
+
+    ) {
     var expanded by remember { mutableStateOf(false) }
     var showDeleteConfirmDialog by remember { mutableStateOf(false) }
 
@@ -124,7 +129,8 @@ private fun TravelCardContent(
                     if (showDeleteConfirmDialog) {
                         showDeleteAlert(
                             onDismiss = { showDeleteConfirmDialog = false },
-                            onDelete = onClickDelete
+                            onDelete = onClickDelete,
+                            onRefresh = onRefreshList
                         )
                     }
                 }
@@ -146,7 +152,8 @@ private fun TravelCardContent(
 @Composable
 fun showDeleteAlert(
     onDismiss: () -> Unit,
-    onDelete: () -> Unit
+    onDelete: () -> Unit,
+    onRefresh: () -> Unit
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -154,7 +161,10 @@ fun showDeleteAlert(
         text = { Text(stringResource(id = R.string.confirm_delete_message)) },
         confirmButton = {
             Button(
-                onClick = { onDelete() }
+                onClick = {
+                    onDelete()
+                    onRefresh()
+                }
             ) { Text("Yes") }
         },
         dismissButton = {
@@ -173,7 +183,8 @@ fun TravelReviewCardPreview() {
             review = "ok",
             dateReviewed = DateFormat.getDateTimeInstance().format(Date()),
             onClickDelete = { },
-            onClickReviewDetails = {}
+            onClickReviewDetails = {},
+            onRefreshList ={}
         )
     }
 }

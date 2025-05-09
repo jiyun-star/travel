@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.runtime.toMutableStateList
@@ -21,6 +22,9 @@ import ie.setu.donationx.R
 import ie.setu.donationx.data.TravelModel
 import ie.setu.donationx.data.fakeReviews
 import ie.setu.donationx.ui.components.general.Centre
+import ie.setu.donationx.ui.components.general.ShowError
+import ie.setu.donationx.ui.components.general.ShowLoader
+import ie.setu.donationx.ui.components.general.ShowRefreshList
 import ie.setu.donationx.ui.components.report.ReportText
 import ie.setu.donationx.ui.components.review.ReviewCardList
 import ie.setu.donationx.ui.screens.review.ListViewModel
@@ -33,6 +37,9 @@ fun ListScreen(modifier: Modifier = Modifier,
                  listViewModel: ListViewModel = hiltViewModel()) {
 
     val reviews = listViewModel.uiReviews.collectAsState().value
+    val isError = listViewModel.isErr.value
+    val isLoading = listViewModel.isLoading.value
+    val error = listViewModel.error.value
 
     Column {
         Column(
@@ -41,8 +48,12 @@ fun ListScreen(modifier: Modifier = Modifier,
                 end = 24.dp
             ),
         ) {
+            if(isLoading) ShowLoader("Loading travels...")
             ReportText()
-            if(reviews.isEmpty())
+            if(!isError)
+
+                ShowRefreshList(onClick = { listViewModel.getReviews() })
+            if (reviews.isEmpty() && !isError)
                 Centre(Modifier.fillMaxSize()) {
                     Text(color = MaterialTheme.colorScheme.secondary,
                         fontWeight = FontWeight.Bold,
@@ -52,17 +63,27 @@ fun ListScreen(modifier: Modifier = Modifier,
                         text = stringResource(R.string.empty_list)
                     )
                 }
-            else
+            if (!isError) {
                 ReviewCardList(
                     reviews = reviews,
                     onClickReviewDetails = onClickReviewDetails,
-                    onDeleteReview = {
-                            review: TravelModel ->
+                    onDeleteReview = { review: TravelModel ->
                         listViewModel.deleteReview(review)
                     }
                 )
+            }
+            if (isError) {
+                ShowError(headline = error.message!! + " error...",
+                    subtitle = error.toString(),
+                    onClick = { listViewModel.getReviews() })
+            }
+
         }
     }
+    LaunchedEffect(Unit) {
+        ListViewModel.getReviews()
+    }
+
 }
 
 @Preview(showBackground = true)
