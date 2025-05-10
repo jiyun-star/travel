@@ -11,6 +11,7 @@ data class TravelModel(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val _id: String = "N/A",
+    var email: String = "joe@bloggs.com",
     @SerializedName("Location")
     val location: String = "N/A",
     @SerializedName("rating")

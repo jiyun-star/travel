@@ -6,28 +6,51 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ie.setu.donationx.data.TravelModel
+import ie.setu.donationx.data.api.RetrofitRepository
 import ie.setu.donationx.data.room.RoomRepository
+import ie.setu.donationx.firebase.services.AuthService
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class DetailsViewModel @Inject
-constructor(private val repository: RoomRepository,
+constructor(private val repository: RetrofitRepository,
+            private val authService: AuthService,
             savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     var review = mutableStateOf(TravelModel())
-    val id: Int = checkNotNull(savedStateHandle["id"])
-
+    val id: String = checkNotNull(savedStateHandle["id"])
+    var isErr = mutableStateOf(false)
+    var error = mutableStateOf(Exception())
+    var isLoading = mutableStateOf(false)
     init {
         viewModelScope.launch {
-            repository.get(id).collect { objReview: TravelModel ->
-                review.value = objReview
+            try {
+                isLoading.value = true
+                review.value = repository.get(authService.email!!,id)[0]
+                isErr.value = false
+                isLoading.value = false
+            } catch (e: Exception) {
+                isErr.value = true
+                error.value = e
+                isLoading.value = false
             }
         }
     }
 
     fun updateReview(review: TravelModel) {
-        viewModelScope.launch { repository.update(review) }
+        viewModelScope.launch {
+            try {
+                isLoading.value = true
+                repository.update(authService.email!!,review)
+                isErr.value = false
+                isLoading.value = false
+            } catch (e: Exception) {
+                isErr.value = true
+                error.value = e
+                isLoading.value = false
+            }
+        }
     }
 }

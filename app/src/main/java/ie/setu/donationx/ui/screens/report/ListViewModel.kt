@@ -5,7 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ie.setu.donationx.data.TravelModel
+import ie.setu.donationx.data.api.RetrofitRepository
 import ie.setu.donationx.data.room.RoomRepository
+import ie.setu.donationx.firebase.services.AuthService
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,7 +17,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ListViewModel @Inject
-constructor(private val repository: RoomRepository) : ViewModel() {
+constructor(private val repository: RetrofitRepository,
+            private val authService: AuthService
+
+
+) : ViewModel() {
 
     private val _reviews =
         MutableStateFlow<List<TravelModel>>(emptyList())
@@ -38,7 +44,7 @@ constructor(private val repository: RoomRepository) : ViewModel() {
         viewModelScope.launch {
             try {
                 isLoading.value = true
-                _reviews.value = repository.getAll()
+                _reviews.value = repository.getAll(authService.email!!)
                 isErr.value = false
                 isLoading.value = false
             }
@@ -53,7 +59,7 @@ constructor(private val repository: RoomRepository) : ViewModel() {
 
     fun deleteReview(review: TravelModel) {
         viewModelScope.launch {
-            repository.delete(review)
+            repository.delete(authService.email!!,review)
         }
     }
 

@@ -12,20 +12,24 @@ import retrofit2.http.PUT
 
 
 interface TravelService {
-    @GET(ServiceEndPoints.TRAVELS_ENDPOINT)
-    suspend fun getall(): Response<List<TravelModel>>
+    @GET(ServiceEndPoints.TRAVELS_ENDPOINT+ "/{email}")
+    suspend fun getall(@Path("email") email: String): Response<List<TravelModel>>
 
-    @GET(ServiceEndPoints.TRAVELS_ENDPOINT + "/{id}")
-    suspend fun get(@Path("id") id: String): Response<List<TravelModel>>
+    @GET(ServiceEndPoints.TRAVELS_ENDPOINT+ "/{email}" + "/{id}")
+    suspend fun get(@Path("email") email: String,
+                    @Path("id") id: String): Response<List<TravelModel>>
 
-    @DELETE(ServiceEndPoints.TRAVELS_ENDPOINT + "/{id}")
-    suspend fun delete(@Path("id") id: String): travelWrapper
+    @DELETE(ServiceEndPoints.TRAVELS_ENDPOINT+ "/{email}" + "/{id}")
+    suspend fun delete(@Path("email") email: String,
+                       @Path("id") id: String): travelWrapper
 
-    @POST(ServiceEndPoints.TRAVELS_ENDPOINT)
-    suspend fun post(@Body donation: TravelModel): travelWrapper
+    @POST(ServiceEndPoints.TRAVELS_ENDPOINT+ "/{email}")
+    suspend fun post(@Path("email") email: String,
+                     @Body review: TravelModel): travelWrapper
 
-    @PUT(ServiceEndPoints.TRAVELS_ENDPOINT + "/{id}")
-    suspend fun put(@Path("id") id: String,
-                    @Body donation: TravelModel
+    @PUT(ServiceEndPoints.TRAVELS_ENDPOINT+ "/{email}" + "/{id}")
+    suspend fun put(@Path("email") email: String,
+                    @Path("id") id: String,
+                    @Body review: TravelModel
     ): travelWrapper
 }

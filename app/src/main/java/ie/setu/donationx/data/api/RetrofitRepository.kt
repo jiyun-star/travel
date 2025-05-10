@@ -7,42 +7,42 @@ import ie.setu.donationx.data.TravelModel
 class RetrofitRepository @Inject
 constructor(private val serviceApi: TravelService)  {
 
-    suspend fun getAll(): List<TravelModel>
+    suspend fun getAll(email: String): List<TravelModel>
     {
         return withContext(Dispatchers.IO) {
-            val travels = serviceApi.getall()
+            val travels = serviceApi.getall(email)
             travels.body() ?: emptyList()
         }
     }
 
-    suspend fun get(id: String): List<TravelModel>
+    suspend fun get(email: String, id: String): List<TravelModel>
     {
         return withContext(Dispatchers.IO) {
-            val travel = serviceApi.get(id)
+            val travel = serviceApi.get(email,id)
             travel.body() ?: emptyList()
         }
     }
 
-    suspend fun insert(travel: TravelModel) : travelWrapper
+    suspend fun insert(email: String,travel: TravelModel) : travelWrapper
     {
         return withContext(Dispatchers.IO) {
-            val wrapper = serviceApi.post(travel)
+            val wrapper = serviceApi.post(email, travel)
             wrapper
         }
     }
 
-    suspend fun update(travel: TravelModel) : travelWrapper
+    suspend fun update(email: String,travel: TravelModel) : travelWrapper
     {
         return withContext(Dispatchers.IO) {
-            val wrapper = serviceApi.put(travel._id,travel)
+            val wrapper = serviceApi.put(email, travel._id, travel)
             wrapper
         }
     }
 
-    suspend fun delete(travel: TravelModel) : travelWrapper
+    suspend fun delete(email: String,travel: TravelModel) : travelWrapper
     {
         return withContext(Dispatchers.IO) {
-            val wrapper = serviceApi.delete(travel._id)
+            val wrapper = serviceApi.delete(email, travel._id)
             wrapper
         }
     }
