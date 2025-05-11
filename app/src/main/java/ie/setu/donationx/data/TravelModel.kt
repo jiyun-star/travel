@@ -6,7 +6,7 @@ import com.google.firebase.firestore.DocumentId
 import com.google.gson.annotations.SerializedName
 import java.util.Date
 
-@Entity
+
 data class TravelModel(
     @DocumentId val _id: String = "N/A",
 

@@ -15,5 +15,5 @@
         <string name="about_message">i wanna travel the world</string>
         <string name="confirm_delete">Confirm Delete?</string>
         <string name="confirm_delete_message">Are you sure you want to delete this travel?</string>
-
+       <string name= "web_client_id">Z16FdqJaurPxDhlz9Dvvty6Slap1</string>
 </resources>

@@ -75,6 +75,9 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.firebase.auth)
     implementation(libs.firebase.storage)
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services.auth)
+    implementation(libs.googleid)
     ksp(libs.hilt.android.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
@@ -106,5 +109,8 @@ dependencies {
     //Firebase
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)
+    implementation(libs.googleid)
+    implementation(libs.coil.compose)
+
 
 }
