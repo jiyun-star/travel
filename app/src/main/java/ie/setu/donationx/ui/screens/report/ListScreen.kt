@@ -33,7 +33,7 @@ import ie.setu.donationx.ui.theme.DonationXTheme
 
 @Composable
 fun ListScreen(modifier: Modifier = Modifier,
-                 onClickReviewDetails: (Int) -> Unit,
+                 onClickReviewDetails: (String) -> Unit,
                  listViewModel: ListViewModel = hiltViewModel()) {
 
     val reviews = listViewModel.uiReviews.collectAsState().value
@@ -50,9 +50,9 @@ fun ListScreen(modifier: Modifier = Modifier,
         ) {
             if(isLoading) ShowLoader("Loading travels...")
             ReportText()
-            if(!isError)
+   //         if(!isError)
 
-                ShowRefreshList(onClick = { listViewModel.getReviews() })
+       //         ShowRefreshList(onClick = { listViewModel.getReviews() })
             if (reviews.isEmpty() && !isError)
                 Centre(Modifier.fillMaxSize()) {
                     Text(color = MaterialTheme.colorScheme.secondary,
@@ -80,11 +80,11 @@ fun ListScreen(modifier: Modifier = Modifier,
 
         }
     }
-    LaunchedEffect(Unit) {
-        ListViewModel.getReviews()
+ //   LaunchedEffect(Unit) {
+  //      ListViewModel.getReviews()
     }
 
-}
+
 
 @Preview(showBackground = true)
 @Composable

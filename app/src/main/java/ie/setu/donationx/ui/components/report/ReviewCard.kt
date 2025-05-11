@@ -32,10 +32,10 @@ fun ReviewCard(
     location: String,
     rating: Int,
     review: String,
-    dateReviewed: String,
+    dateCreated: String,
+    dateModified: String,
     onClickDelete: () -> Unit,
     onClickReviewDetails: () -> Unit,
-    onRefreshList: () -> Unit,
 
     ) {
     Card(
@@ -49,10 +49,11 @@ fun ReviewCard(
             location,
             rating,
             review,
-            dateReviewed,
+            dateCreated,
+            dateModified,
             onClickDelete,
             onClickReviewDetails,
-            onRefreshList
+
         )
     }
 }
@@ -62,10 +63,11 @@ private fun TravelCardContent(
     location: String,
     rating: Int,
     review: String,
-    dateReviewed: String,
+    dateCreated: String,
+    dateModified: String,
+
     onClickDelete: () -> Unit,
     onClickReviewDetails: () -> Unit,
-    onRefreshList: () -> Unit,
 
     ) {
     var expanded by remember { mutableStateOf(false) }
@@ -110,7 +112,10 @@ private fun TravelCardContent(
                 )
             }
             Text(
-                text = "Reviewed on $dateReviewed", style = MaterialTheme.typography.labelSmall
+                text = "reviewed $dateCreated", style = MaterialTheme.typography.labelSmall
+            )
+            Text(
+                text = "Modified $dateModified", style = MaterialTheme.typography.labelSmall
             )
             if (expanded) {
                 Text(modifier = Modifier.padding(vertical = 16.dp), text = review)
@@ -130,7 +135,7 @@ private fun TravelCardContent(
                         showDeleteAlert(
                             onDismiss = { showDeleteConfirmDialog = false },
                             onDelete = onClickDelete,
-                            onRefresh = onRefreshList
+                           // onRefresh = onRefreshList
                         )
                     }
                 }
@@ -153,7 +158,6 @@ private fun TravelCardContent(
 fun showDeleteAlert(
     onDismiss: () -> Unit,
     onDelete: () -> Unit,
-    onRefresh: () -> Unit
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -163,7 +167,6 @@ fun showDeleteAlert(
             Button(
                 onClick = {
                     onDelete()
-                    onRefresh()
                 }
             ) { Text("Yes") }
         },
@@ -181,10 +184,10 @@ fun TravelReviewCardPreview() {
             location = "seoul, korea",
             rating = 4,
             review = "ok",
-            dateReviewed = DateFormat.getDateTimeInstance().format(Date()),
+            dateCreated = DateFormat.getDateTimeInstance().format(Date()),
+            dateModified = DateFormat.getDateTimeInstance().format(Date()),
             onClickDelete = { },
             onClickReviewDetails = {},
-            onRefreshList ={}
         )
     }
 }
