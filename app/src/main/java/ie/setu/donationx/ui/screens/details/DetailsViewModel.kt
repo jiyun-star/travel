@@ -9,12 +9,13 @@ import ie.setu.donationx.data.TravelModel
 import ie.setu.donationx.data.api.RetrofitRepository
 import ie.setu.donationx.data.room.RoomRepository
 import ie.setu.donationx.firebase.services.AuthService
+import ie.setu.donationx.firebase.services.FirestoreService
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class DetailsViewModel @Inject
-constructor(private val repository: RetrofitRepository,
+constructor(private val repository: FirestoreService,
             private val authService: AuthService,
             savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -28,7 +29,7 @@ constructor(private val repository: RetrofitRepository,
         viewModelScope.launch {
             try {
                 isLoading.value = true
-                review.value = repository.get(authService.email!!,id)[0]
+                review.value = repository.get(authService.email!!,id)!!
                 isErr.value = false
                 isLoading.value = false
             } catch (e: Exception) {
