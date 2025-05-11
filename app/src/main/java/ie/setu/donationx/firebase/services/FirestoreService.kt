@@ -1,5 +1,6 @@
 package ie.setu.donationx.firebase.services
 
+import android.net.Uri
 import ie.setu.donationx.data.TravelModel
 import kotlinx.coroutines.flow.Flow
 
@@ -13,4 +14,5 @@ interface FirestoreService {
     suspend fun insert(email: String, review: Review)
     suspend fun update(email: String, review: Review)
     suspend fun delete(email: String, reviewId: String)
+    suspend fun updatePhotoUris(email: String, uri: Uri)
 }
