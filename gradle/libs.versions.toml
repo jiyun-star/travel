@@ -33,7 +33,9 @@ retrofit = "2.11.0"
 googleGmsGoogleServices = "4.4.2"
 playServicesAuth = "21.3.0"
 firebaseAuth = "23.2.0"
-
+firebaseStorage = "21.0.1"
+#V6
+firebaseFirestore = "25.1.2"
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
@@ -77,6 +79,8 @@ androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+firebase-storage = { group = "com.google.firebase", name = "firebase-storage", version.ref = "firebaseStorage" }
+firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

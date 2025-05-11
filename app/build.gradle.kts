@@ -74,6 +74,7 @@ dependencies {
     //Hilt
     implementation(libs.hilt.android)
     implementation(libs.firebase.auth)
+    implementation(libs.firebase.storage)
     ksp(libs.hilt.android.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
@@ -104,4 +105,6 @@ dependencies {
 
     //Firebase
     implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore)
+
 }
