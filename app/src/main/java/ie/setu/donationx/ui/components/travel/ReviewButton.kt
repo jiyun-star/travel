@@ -11,6 +11,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -33,11 +34,9 @@ fun ReviewButton(
     listViewModel: ListViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
-    val isError = ReviewViewModel.isErr.value
-    val error = ReviewViewModel.error.value
- //   val isLoading = ReviewViewModel.isLoading.value
+    val isError = reviewViewModel.isErr.value
+    val error = reviewViewModel.error.value
 
- //   if(isLoading) ShowLoader("Trying to Donate...")
     Row {
         Button(
             onClick = {

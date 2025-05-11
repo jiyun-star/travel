@@ -15,7 +15,9 @@ data class TravelModel(
     var review: String = "tourist trap!",
     val dateReviewed: Date = Date(),
     val dateModified: Date = Date(),
-    var email: String = "joe@bloggs.com"
+    var email: String = "joe@bloggs.com",
+    var imageUri: String = ""
+
 )
 
 val fakeReviews = List(30) { i ->

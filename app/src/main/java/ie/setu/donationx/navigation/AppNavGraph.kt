@@ -42,7 +42,7 @@ fun NavHostProvider(
             //call our 'list' Screen Here
             ListScreen(modifier = modifier,
                 onClickReviewDetails = {
-                        reviewId : Int ->
+                        reviewId : String ->
                     navController.navigateToReviewDetails(reviewId)
                 },
             )
@@ -94,7 +94,7 @@ fun NavHostProvider(
     }
 }
 
-private fun NavHostController.navigateToReviewDetails(reviewId: Int) {
+private fun NavHostController.navigateToReviewDetails(reviewId: String) {
     this.navigate("details/$reviewId")
 }
 
