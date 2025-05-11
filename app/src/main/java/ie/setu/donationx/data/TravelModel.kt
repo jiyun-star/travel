@@ -5,7 +5,6 @@ import androidx.room.PrimaryKey
 import com.google.firebase.firestore.DocumentId
 import com.google.gson.annotations.SerializedName
 import java.util.Date
-import kotlin.random.Random
 
 @Entity
 data class TravelModel(

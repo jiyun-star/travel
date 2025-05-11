@@ -35,9 +35,9 @@ fun ReviewButton(
     val context = LocalContext.current
     val isError = ReviewViewModel.isErr.value
     val error = ReviewViewModel.error.value
-    val isLoading = ReviewViewModel.isLoading.value
+ //   val isLoading = ReviewViewModel.isLoading.value
 
-    if(isLoading) ShowLoader("Trying to Donate...")
+ //   if(isLoading) ShowLoader("Trying to Donate...")
     Row {
         Button(
             onClick = {
@@ -62,6 +62,6 @@ fun ReviewButton(
     if(isError)
         Toast.makeText(context,"Unable to review at this Time...",
             Toast.LENGTH_SHORT).show()
-    else
-        ListViewModel.getReviews()
+    //else
+    //    ListViewModel.getReviews()
 }

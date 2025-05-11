@@ -8,6 +8,7 @@ import ie.setu.donationx.data.TravelModel
 import ie.setu.donationx.data.api.RetrofitRepository
 import ie.setu.donationx.data.room.RoomRepository
 import ie.setu.donationx.firebase.services.AuthService
+import ie.setu.donationx.firebase.services.FirestoreService
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,7 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ListViewModel @Inject
-constructor(private val repository: RetrofitRepository,
+constructor(private val repository: FirestoreService,
             private val authService: AuthService
 
 
@@ -44,9 +45,11 @@ constructor(private val repository: RetrofitRepository,
         viewModelScope.launch {
             try {
                 isLoading.value = true
-                _reviews.value = repository.getAll(authService.email!!)
-                isErr.value = false
-                isLoading.value = false
+                repository.getAll(authService.email!!).collect { items ->
+                    _reviews.value = items
+                    isErr.value = false
+                    isLoading.value = false
+                }
             }
             catch(e:Exception) {
                 isErr.value = true
@@ -59,7 +62,7 @@ constructor(private val repository: RetrofitRepository,
 
     fun deleteReview(review: TravelModel) {
         viewModelScope.launch {
-            repository.delete(authService.email!!,review)
+            repository.delete(authService.email!!,review._id)
         }
     }
 
