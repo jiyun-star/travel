@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Surface
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -31,12 +31,13 @@ import ie.setu.donationx.firebase.auth.Response
 import ie.setu.donationx.navigation.Home
 import ie.setu.donationx.navigation.Login
 import ie.setu.donationx.ui.components.general.ButtonComponent
+import ie.setu.donationx.ui.components.general.GoogleSignInButtonComponent
 import ie.setu.donationx.ui.components.general.HeadingLogoComponent
 import ie.setu.donationx.ui.components.general.HeadingTextComponent
 import ie.setu.donationx.ui.components.general.MyTextFieldComponent
 import ie.setu.donationx.ui.components.general.PasswordTextFieldComponent
-import ie.setu.donationx.ui.components.general.UnderLinedTextComponent
 import ie.setu.donationx.ui.components.general.ShowLoader
+import ie.setu.donationx.ui.components.general.UnderLinedTextComponent
 import ie.setu.donationx.ui.theme.DonationXTheme
 
 @Composable
@@ -62,6 +63,7 @@ fun LoginScreen(
                 modifier = Modifier
                     .fillMaxSize()
             ) {
+                // NormalTextComponent(value = stringResource(id = R.string.login))
                 HeadingTextComponent(value = stringResource(id = R.string.welcome))
                 Spacer(modifier = Modifier.height(20.dp))
                 HeadingLogoComponent()
@@ -92,12 +94,22 @@ fun LoginScreen(
                 ButtonComponent(
                     value = stringResource(id = R.string.login),
                     onButtonClicked = {
-                       loginViewModel.onEvent(LoginUIEvent.LoginButtonClicked)
-                       onLogin()
+                        loginViewModel.onEvent(LoginUIEvent.LoginButtonClicked)
+                        onLogin()
+                        //navController.navigate(Report.route)
+                        //  { launchSingleTop = true }
                     },
                     isEnabled = loginViewModel.allValidationsPassed.value
+
                 )
                 isEnabled = loginViewModel.allValidationsPassed.value
+
+                // Google Button here
+                Spacer(modifier = Modifier.height(10.dp))
+                val context = LocalContext.current
+                GoogleSignInButtonComponent {
+                    loginViewModel.signInWithGoogleCredentials(context)
+                }
             }
         }
     }
@@ -109,19 +121,24 @@ fun LoginScreen(
                 Toast.makeText(context, it.e.message, Toast.LENGTH_LONG).show()
                 navController.popBackStack()
                 navController.navigate(Login.route)
+                //      ShowSnackBar(message = it.exception.message.toString())
             }
             is Response.Loading -> {
+                //CircularProgressIndicator()
                 ShowLoader(message = "Please Wait...")
             }
             is Response.Success -> {
                 LaunchedEffect(Unit) {
+                    //         navController.popBackStack()
                     navController.navigate(Home.route) {
                         popUpTo(Login.route) {
+                            //       navController.popBackStack()
                             inclusive = true
                         }
                     }
                 }
             }
+
         }
     }
 }
@@ -154,7 +171,7 @@ fun PreviewLoginScreen() {
                     .fillMaxSize()
             ) {
 
-              //  NormalTextComponent(value = stringResource(id = R.string.login))
+                //  NormalTextComponent(value = stringResource(id = R.string.login))
                 HeadingTextComponent(value = stringResource(id = R.string.welcome))
                 Spacer(modifier = Modifier.height(10.dp))
                 HeadingLogoComponent()
@@ -190,8 +207,10 @@ fun PreviewLoginScreen() {
                     isEnabled = false
                 )
                 Spacer(modifier = Modifier.height(10.dp))
+                GoogleSignInButtonComponent {
+                    //  loginViewModel.oneTapSignIn()
+                }
             }
         }
-
     }
 }

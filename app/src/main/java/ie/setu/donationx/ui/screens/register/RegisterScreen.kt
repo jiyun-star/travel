@@ -163,7 +163,7 @@ fun PreviewRegisterScreen() {
                     labelValue = stringResource(id = R.string.first_name),
                     painterResource(id = R.drawable.profile),
                     onTextChanged = {
-                      //  registerViewModel.onEvent(RegisterUIEvent.FirstNameChanged(it))
+                        //  registerViewModel.onEvent(RegisterUIEvent.FirstNameChanged(it))
                     },
                     //errorStatus = registerViewModel.registrationUIState.value.firstNameError
                     errorStatus = true
@@ -182,9 +182,9 @@ fun PreviewRegisterScreen() {
                     labelValue = stringResource(id = R.string.password),
                     painterResource = painterResource(id = R.drawable.lock),
                     onTextSelected = {
-                     //   registerViewModel.onEvent(RegisterUIEvent.PasswordChanged(it))
+                        //   registerViewModel.onEvent(RegisterUIEvent.PasswordChanged(it))
                     },
-                   // errorStatus = registerViewModel.registrationUIState.value.passwordError
+                    // errorStatus = registerViewModel.registrationUIState.value.passwordError
                     errorStatus = true
                 )
 
@@ -193,7 +193,7 @@ fun PreviewRegisterScreen() {
                         //  PostOfficeAppRouter.navigateTo(Screen.TermsAndConditionsScreen)
                     },
                     onCheckedChange = {
-                    //    registerViewModel.onEvent(RegisterUIEvent.PrivacyPolicyCheckBoxClicked(it))
+                        //    registerViewModel.onEvent(RegisterUIEvent.PrivacyPolicyCheckBoxClicked(it))
                     }
                 )
 
@@ -202,9 +202,9 @@ fun PreviewRegisterScreen() {
                 ButtonComponent(
                     value = stringResource(id = R.string.register),
                     onButtonClicked = {
-                     //   registerViewModel.onEvent(RegisterUIEvent.RegisterButtonClicked)
+                        //   registerViewModel.onEvent(RegisterUIEvent.RegisterButtonClicked)
                     },
-                //    isEnabled = registerViewModel.allValidationsPassed.value
+                    //    isEnabled = registerViewModel.allValidationsPassed.value
                     isEnabled = true
                 )
 

@@ -85,8 +85,8 @@ fun GoogleSignInButtonComponent(onButtonClicked: () -> Unit) {
                 .background(
                     brush = Brush.horizontalGradient(
                         colors = listOf(
-                            gStartGradientColor,
-                            gEndGradientColor,
+                            Color.Red,
+                            Color.Blue,
                         )
                     ),
                     shape = RoundedCornerShape(50.dp)

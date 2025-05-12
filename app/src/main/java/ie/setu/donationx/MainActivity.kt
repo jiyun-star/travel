@@ -9,7 +9,7 @@ import ie.setu.donationx.ui.screens.home.HomeScreen
 import ie.setu.donationx.ui.theme.DonationXTheme
 
 @AndroidEntryPoint
-class DonationXMainActivity : ComponentActivity() {
+class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
