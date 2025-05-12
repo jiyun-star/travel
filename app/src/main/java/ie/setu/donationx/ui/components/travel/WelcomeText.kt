@@ -31,7 +31,7 @@ fun WelcomeText(modifier: Modifier = Modifier) {
             color = Color.Black
         )
         Text(
-            text = stringResource(R.string.donateSubtitle),
+            text = stringResource((R.string.donateTitle)),
             fontWeight = FontWeight.Bold,
             fontSize = 20.sp,
             color = MaterialTheme.colorScheme.tertiary

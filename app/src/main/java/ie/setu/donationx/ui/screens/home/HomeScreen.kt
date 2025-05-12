@@ -38,7 +38,7 @@ fun HomeScreen(modifier: Modifier = Modifier,
     val userName = if (isActiveSession) currentUser?.displayName else ""
     val userDestinations = if (!isActiveSession)
         userSignedOutDestinations
-    else bottomAppBarDestinations
+          else bottomAppBarDestinations
 
     if (isActiveSession) startScreen = Report
 

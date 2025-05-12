@@ -1,5 +1,6 @@
 package ie.setu.donationx.ui.components.review
 
+import android.net.Uri
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
@@ -31,8 +32,8 @@ internal fun ReviewCardList(
                 review = review.review,  // 리뷰 내용
                 dateCreated = DateFormat.getDateTimeInstance().format(review.dateReviewed),
                 dateModified = DateFormat.getDateTimeInstance().format(review.dateModified),                onClickDelete = { onDeleteReview(review) },
-                onClickReviewDetails = { onClickReviewDetails(review._id) }
-                // onRefreshList = onRefreshList
+                onClickReviewDetails = { onClickReviewDetails(review._id) },
+                        photoUri = Uri.parse(review.imageUri)
 
             )
         }

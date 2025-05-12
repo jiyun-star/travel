@@ -1,5 +1,6 @@
 package ie.setu.donationx.firebase.database
 
+import android.net.Uri
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.dataObjects
 import com.google.firebase.firestore.toObject
@@ -11,6 +12,7 @@ import ie.setu.donationx.firebase.services.Reviews
 import ie.setu.donationx.firebase.services.Review
 
 import kotlinx.coroutines.tasks.await
+import timber.log.Timber
 import java.util.Date
 import javax.inject.Inject
 
@@ -23,11 +25,7 @@ class FirestoreRepository
     override suspend fun getAll(email: String): Reviews {
 
         return firestore.collection(REVIEW_COLLECTION)
-//            .orderBy("dateModified",
-//                if(sortAsending)
-//                    Query.Direction.ASCENDING
-//                else
-//                    Query.Direction.DESCENDING)
+
             .whereEqualTo(USER_EMAIL, email)
             .dataObjects()
     }
@@ -40,11 +38,14 @@ class FirestoreRepository
 
     override suspend fun insert(email: String,
                                 review: Review)
-    {
-        val reviewWithEmail = review.copy(email = email)
+    {        val reviewWithEmailAndImage =
+        review.copy(
+            email = email,
+            imageUri = auth.customPhotoUri!!.toString()
+        )
 
         firestore.collection(REVIEW_COLLECTION)
-                .add(reviewWithEmail)
+                .add(reviewWithEmailAndImage)
                 .await()
 
     }
@@ -65,4 +66,22 @@ class FirestoreRepository
                 .document(reviewId)
                 .delete().await()
     }
+    override suspend fun updatePhotoUris(email: String, uri: Uri) {
+
+        firestore.collection(REVIEW_COLLECTION)
+            .whereEqualTo(USER_EMAIL, email)
+            .get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    Timber.i("FSR Updating ID ${document.id}")
+                    firestore.collection(REVIEW_COLLECTION)
+                        .document(document.id)
+                        .update("imageUri", uri.toString())
+                }
+            }
+            .addOnFailureListener { exception ->
+                Timber.i("Error $exception")
+            }
+    }
+
 }

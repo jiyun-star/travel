@@ -23,12 +23,12 @@ class RegisterViewModel @Inject constructor(
 )
     : ViewModel() {
 
-   var registrationUIState = mutableStateOf(RegisterUIState())
-   var allValidationsPassed = mutableStateOf(false)
-   var signUpInProgress = mutableStateOf(false)
+    var registrationUIState = mutableStateOf(RegisterUIState())
+    var allValidationsPassed = mutableStateOf(false)
+    var signUpInProgress = mutableStateOf(false)
 
-   private val _signupFlow = MutableStateFlow<FirebaseSignInResponse?>(null)
-   val signupFlow: StateFlow<FirebaseSignInResponse?> = _signupFlow
+    private val _signupFlow = MutableStateFlow<FirebaseSignInResponse?>(null)
+    val signupFlow: StateFlow<FirebaseSignInResponse?> = _signupFlow
 
     fun signUpUser() = viewModelScope.launch {
         _signupFlow.value = Response.Loading
@@ -93,14 +93,14 @@ class RegisterViewModel @Inject constructor(
         )
 
         registrationUIState.value = registrationUIState.value.copy(
-           firstNameError = fNameResult.status,
+            firstNameError = fNameResult.status,
             emailError = emailResult.status,
             passwordError = passwordResult.status,
             privacyPolicyError = privacyPolicyResult.status
         )
 
         allValidationsPassed.value = fNameResult.status && emailResult.status &&
-                                passwordResult.status && privacyPolicyResult.status
+                passwordResult.status && privacyPolicyResult.status
     }
 
     fun resetRegisterFlow() {

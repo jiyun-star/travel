@@ -6,8 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ie.setu.donationx.data.TravelModel
-import ie.setu.donationx.data.api.RetrofitRepository
-import ie.setu.donationx.data.room.RoomRepository
 import ie.setu.donationx.firebase.services.AuthService
 import ie.setu.donationx.firebase.services.FirestoreService
 import kotlinx.coroutines.launch
